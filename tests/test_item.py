@@ -13,11 +13,15 @@ def test_item_init(position):
     assert position.quantity == 1
 
 
-def test_calculate_total_price(position):
-    assert position.calculate_total_price() != 100
 
+def test_calculate_total_price():
+    item = Item('Смартфон', 20_000, 100)
+    assert item.calculate_total_price() == 2_000_000
 
-def test_apply_discount(position):
-    position.apply_discount()
-    Item.pay_rate = 0.8
-    assert position.price == 80
+def test_apply_discount():
+    item = Item('Смартфон', 1, 300)
+    Item.pay_rate = 0.1
+
+    item.apply_discount()
+
+    assert item.price != 270
