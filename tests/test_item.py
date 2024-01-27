@@ -2,6 +2,7 @@ import pytest
 
 from src.item import Item
 
+
 @pytest.fixture
 def position():
     return Item("Смартфон", 100, 1)
@@ -13,15 +14,15 @@ def test_item_init(position):
     assert position.quantity == 1
 
 
-
 def test_calculate_total_price():
-    item = Item('Смартфон', 20_000, 100)
-    assert item.calculate_total_price() == 2_000_000
+    item = Item('Смартфон', 20000, 100)
+    assert item.calculate_total_price() == 2000000
+
 
 def test_apply_discount():
-    item = Item('Смартфон', 1, 300)
+    item = Item('Смартфон', 2000, 3)
     Item.pay_rate = 0.1
 
     item.apply_discount()
 
-    assert item.price != 270
+    assert item.price == 200.0
