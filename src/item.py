@@ -58,14 +58,14 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, file_name):
         cls.all.clear()
-
         with open(file_name, 'r') as f:
             reader = csv.DictReader(f)
             items = list(reader)
             for item in items:
-                cls(name=item.get('name'),
-                    price=item.get('price'),
-                    quantity=item.get('quantity'))
+                name = item['name']
+                price = cls.string_to_number(item['price'])
+                quantity = int(item['quantity'])
+                cls(name, price, quantity)
 
     @staticmethod
     def string_to_number(number):
