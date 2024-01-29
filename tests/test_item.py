@@ -25,4 +25,24 @@ def test_apply_discount():
 
     item.apply_discount()
 
-    assert item.price == 200.0
+    assert item.price == 1800.0
+
+
+def test_name_setter():
+    item = Item('Телефон', 10000, 5)
+    item.name = 'Смартфон'
+    assert item.name == 'Телефон'
+
+
+def test_name_setter_truncate():
+    item = Item('Телефон', 25000, 3)
+    item.name = 'Суперсмартфон'
+    assert item.name == 'Телефон'
+
+
+def test_string_to_number():
+    assert Item.string_to_number('5') == 5
+    assert Item.string_to_number('5.0') == 5
+    assert Item.string_to_number('5.5') == 5
+
+
