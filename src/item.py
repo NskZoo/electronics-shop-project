@@ -53,19 +53,19 @@ class Item:
 
     @name.setter
     def name(self, value):
-        self._name = value
+        self.__name = value
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, file_name):
         cls.all.clear()
-        path = os.path.join(os.path.dirname(__file__), 'items.csv')
-        with open(path, 'r') as f:
+
+        with open(file_name, 'r') as f:
             reader = csv.DictReader(f)
             items = list(reader)
             for item in items:
-                print(cls(name=item.get('name'),
-                          price=item.get('price'),
-                          quantity=item.get('quantity')))
+                cls(name=item.get('name'),
+                    price=item.get('price'),
+                    quantity=item.get('quantity'))
 
     @staticmethod
     def string_to_number(number):
