@@ -31,18 +31,26 @@ def test_apply_discount():
 def test_name_setter():
     item = Item('Телефон', 10000, 5)
     item.name = 'Смартфон'
-    assert item.name == 'Телефон'
+    assert item.name == 'Смартфон'
 
 
 def test_name_setter_truncate():
     item = Item('Телефон', 25000, 3)
     item.name = 'Суперсмартфон'
-    assert item.name == 'Телефон'
+    assert item.name == 'Суперсмартфон'
 
 
 def test_string_to_number():
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.0') == 5
     assert Item.string_to_number('5.5') == 5
+
+
+def test_repr_str(position):
+    item = Item('Смартфон', 10000, 20)
+    assert repr(item) == "Item('Смартфон', 10000, 20)"
+    assert str(item) == 'Смартфон'
+
+
 
 
