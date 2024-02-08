@@ -11,6 +11,7 @@ def position():
     """
     return Item("Смартфон", 100, 1)
 
+
 @pytest.fixture
 def phone1():
     """
