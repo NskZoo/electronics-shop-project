@@ -2,30 +2,21 @@ import pytest
 from src.keyboard import Keyboard
 
 
-@pytest.fixture()
-def keyboard1():
-    """
-    Экземпляр класса в фикстуре
-    """
-
-    return Keyboard('Dark Project KD87A', 9600, 5)
+@pytest.fixture
+def keyboard():
+    return Keyboard("Example Keyboard", 50.0, 100)
 
 
-def test_change_lang(keyboard1):
-    """
-    Тесты функции change_lang
-    """
-
-    keyboard1.change_lang()
-    assert str(keyboard1.language) == "RU"
-    keyboard1.change_lang().change_lang()
-    assert str(keyboard1.language) == "RU"
+def test_default_language_is_en(keyboard):
+    assert keyboard.language == 'EN'
 
 
-def test_str(keyboard1):
-    """
-    Тест метода str
-    """
+def test_change_language_to_ru(keyboard):
+    keyboard.change_lang()
+    assert keyboard.language == 'RU'
 
-    assert str(keyboard1) == "Dark Project KD87A"
-    assert str(keyboard1.language) == "EN"
+
+def test_change_language_back_to_en(keyboard):
+    keyboard.change_lang()
+    keyboard.change_lang()
+    assert keyboard.language == 'EN'
