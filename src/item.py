@@ -2,6 +2,17 @@ import csv
 import os
 
 
+class InstantiateCSVError(Exception):
+    """
+    Класс исключения при повреждении файла
+    """
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else "Файл item.csv поврежден"
+
+    def __str__(self):
+        return self.message
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -56,16 +67,21 @@ class Item:
         self.__name = value
 
     @classmethod
-    def instantiate_from_csv(cls, file_name):
+    def instantiate_from_csv(cls):
         cls.all.clear()
-        with open(file_name, 'r') as f:
-            reader = csv.DictReader(f)
-            items = list(reader)
-            for item in items:
-                name = item['name']
-                price = cls.string_to_number(item['price'])
-                quantity = int(item['quantity'])
-                cls(name, price, quantity)
+        try:
+            with (open("../src/items.csv", "rt", newline="", encoding="cp1251") as csv_file):
+
+                reader = csv.DictReader(csv_file)
+
+                for object in reader:
+                    if "name" not in object or "price" not in object or "quantity" not in object:
+                        raise InstantiateCSVError
+                    cls(object["name"], object["price"], object["quantity"])
+        except FileNotFoundError:
+            print("FileNotFoundError: Отсутствует файл item.csv")
+        except InstantiateCSVError:
+            print("InstantiateCSVError: Файл item.csv поврежден")
 
     @staticmethod
     def string_to_number(number):
@@ -86,4 +102,3 @@ class Item:
             raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
         else:
             return self.quantity + other.quantity
-
